@@ -1,0 +1,125 @@
+//
+//  LoginController.swift
+//  Twitter
+//
+//  Created by Marco Mascorro on 5/5/22.
+//
+
+import UIKit
+
+
+//this controller is embedded inside a navigation view in the scene delegate file.
+class LoginController: UIViewController {
+    
+    
+    //MARK: - Properties
+    
+    //Creating the twitter logo in the logingcontroller
+    private let logoImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.image = UIImage(named: "TwitterLogo")
+        
+        return iv
+    }()
+    
+    //Configuring the emailtextfield into its own container view so that i can customize it and make it look nice and pretty
+    private lazy var emailContainerView: UIView = {
+        let view = Utilities().inputContainerView(withImage: "mail", textfield: emailTextField)
+        return view
+    }()
+    
+    //Configuring the passwordtextfield into its own container view so that i can customize it and make it look nice and pretty
+    private lazy var passwordContainerView: UIView = {
+        let view = Utilities().inputContainerView(withImage: "ic_lock_outline_white_2x", textfield: passwordTextField)
+        return view
+    }()
+    
+    //setting up the email textfield, it needs to be in CLASS scope so that it will be able have access from any file.
+    private let emailTextField: UITextField = {
+       let tf = Utilities().textField(withPlaceHolder: "Email")
+        tf.keyboardType = .emailAddress
+       return tf
+    }()
+    
+    //setting up the password textfield, it needs to be in CLASS scope so that it will be able have access from any file.
+    private let passwordTextField: UITextField = {
+        let tf = Utilities().textField(withPlaceHolder: "Password")
+        tf.isSecureTextEntry = true
+        tf.keyboardType = .default
+        return tf
+    }()
+    
+    private let loginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        button.setTitle("Login", for: .normal)
+        button.setTitleColor(UIColor.twitterBlue, for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(loginDidTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private let dontHaveAccountButton: UIButton = {
+        let button = Utilities().attributedButton("Dont have an account?", " Sign up")
+        button.addTarget(self, action: #selector(noAccountDidTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    //MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureUI()
+    }
+    
+    //MARK: - Selectors
+    @objc private func loginDidTapped(){
+        print("Loggin Tapped")
+    }
+    
+    @objc private func noAccountDidTapped(){
+        let registrationVC = RegistrationController()
+        registrationVC.navigationItem.setHidesBackButton(true, animated: false)
+        
+        self.navigationController?.pushViewController(registrationVC, animated: true)
+    }
+    
+    
+    // MARK: - Helpers
+    
+    //Setting up the UI for the login screen.
+    func configureUI(){
+        //Setting up background color of the view.
+        view.backgroundColor = .twitterBlue
+        navigationController?.navigationBar.barStyle = .black
+        
+        //adding logoimageview to the view.
+        view.addSubview(logoImageView)
+        //centering logoimageview in the x-axis.
+        logoImageView.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
+        //adding height and width properties
+        logoImageView.setDimensions(width: 100, height: 100)
+        //adding noaccount button to the view
+        view.addSubview(dontHaveAccountButton)
+        dontHaveAccountButton.anchor(left: view.leftAnchor,bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 40, paddingBottom: 8, paddingRight: 40)
+        //Configuring a stack view for emailcontainerview and password container view so that they can have the same dimensions.
+            //Setting up my stackview, with the arranged subviews of email and password container view.
+        let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, loginButton])
+        //this is making sure it is vertically align, so that they are on top of each other.
+        stack.axis = .vertical
+        //giving the stack some spacing
+        stack.spacing = 20
+        //adding the stack view to the view subview
+        view.addSubview(stack)
+        //anchoring the stack view to the botton of the twitter logo anchor
+        stack.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
+        
+        
+    }
+    
+
+    
+
+}
