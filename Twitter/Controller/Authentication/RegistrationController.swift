@@ -117,39 +117,71 @@ class RegistrationController: UIViewController{
         guard let fullName = fullNameTextField.text else {return}
         guard let userName = usernameTextField.text else {return}
         
-        let credentials = AuthCredentials(email: email,
-                                          password: password,
-                                          fullname: fullName,
-                                          username: userName,
-                                          profileImage: profileImage)
+        //this are credentials made in the API folder in the AuthService.swift file. where the register function is called
+        let credentials = RegisterAuthCredentials(email: email,
+                                                  password: password,
+                                                  fullname: fullName,
+                                                  username: userName,
+                                                  profileImage: profileImage)
         
         AuthService.shared.registerUser(credentials: credentials) { error, ref in
-            print("DEBUG: Sign up successful...")
-            print("DEBUG: Handle update user interface.")
+            
+            //if there was an error, i want to return and print out the error
+            if let error = error {
+                print("DEBUG: There has been an error: \(error.localizedDescription)")
+                return
+            }
+            
+            
+            //this ensure that the rootviewcontroller is the maintabcontroller
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? MainTabController else {return}
+            
+            
+            //this ensures the authenticateUserAndConfigureUI funtion gets called so that all the user data can be passed and ensures user is logged in
+            tab.authenticateUserAndConfigureUI()
+            
+            //dimissed the registration controller becuase its on top of the maintabcontroller.
+            self.dismiss(animated: true)
+            
         }
         
         
         
         
+    }
+    
+    //Function that dimisses the keyboard when the tap gesture is activated
+    @objc private func dismissKeyboard(){
+        view.endEditing(true)
     }
     
     
     @objc private func signInDidTapped(){
+        //thiu takes registration controller to the previous controller which was the logincontroller
         navigationController?.popViewController(animated: true)
     }
     
     @objc private func addImageDidTapped(){
+        //sets up the image picker controller which allows to pick an image from your camera roll
         let ipc = UIImagePickerController()
         
         print("Add Image tapped")
+        
+        //this animation makes it look like the image was tapped
         addImageView.alpha = 0.75
+        //adds a .3 of a second delay that makes the opacity go from 75% to 100%
         UIView.animate(withDuration:0.3){
             self.addImageView.alpha = 1
         }
         
+        //this makes sure you are sellecting from the devices phoro library
         ipc.sourceType = .photoLibrary
+        //sets the UIImagePickerController delegate to self, meaning it sets it to the registration controller
         ipc.delegate = self
+        //Allows you to style the zoom of your phoro selected
         ipc.allowsEditing = true
+        //it presents you with the devices photo gallery
         present(ipc, animated: true)
         
         
@@ -160,8 +192,11 @@ class RegistrationController: UIViewController{
     
     //Setting up the UI for the login screen.
     func configureUI(){
+        //Setting the controllers background color to the custom twitter blue
         view.backgroundColor = .twitterBlue
+        //adds the haveAccountButton to the registration controller view
         view.addSubview(haveAccountButton)
+        //adds the addImageView to the registration controller view
         view.addSubview(addImageView)
         
         
@@ -185,10 +220,18 @@ class RegistrationController: UIViewController{
         haveAccountButton.anchor(left: view.leftAnchor,bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingLeft: 40, paddingBottom: 8, paddingRight: 40)
     }
     
+    
+    
     private func viewDidLoadHelpers(){
+        // this function helps me adding the tap features to the image picker
+        //configure the tap gesture recognizer
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(addImageDidTapped))
+        //adding the tapGestureRecognizer to the addimageView
         addImageView.addGestureRecognizer(tapGestureRecognizer)
+        //making sure user interaction is enabled
         addImageView.isUserInteractionEnabled = true
+        //this allows me to return and go to the next image field when user presses return
+        //here we are setting the textfields delegates to the registration controller
         emailTextField.delegate = self
         passwordTextField.delegate = self
         fullNameTextField.delegate = self
@@ -206,12 +249,12 @@ class RegistrationController: UIViewController{
 extension RegistrationController: UITextFieldDelegate {
     //hiding the keyboard when i tap on the screen
     private func initializaHideKeyboard(){
+       //setting up the tap gesture recognized with a selector of a function that dismisses the keyboard
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        //adding the tap gesture recognizer the the registration controller
         view.addGestureRecognizer(tap)
     }
-    @objc private func dismissKeyboard(){
-        view.endEditing(true)
-    }
+   
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switchBasedNextTextField(textField)

@@ -75,11 +75,38 @@ class LoginController: UIViewController {
     }
     
     //MARK: - Selectors
+    
+    //When the loggin button is tapped i want to sign then in
     @objc private func loginDidTapped(){
-        print("Loggin Tapped")
+        //we are guarding this properties to make sure they are not nil
+        guard let email = emailTextField.text else {return}
+        guard let password = passwordTextField.text else {return}
+        
+        let credentials = LoginAuthCredentials(email: email,password: password)
+        
+        AuthService.shared.loginUser(credentials: credentials) { results, error in
+            //if there was an error i want to return an print the error
+            if let error = error {
+                print("DEBUG: There has been an error: \(error.localizedDescription)")
+                return
+            }
+            
+            //setting up the maintabcontroller as the root view controller so that i can called the authenticate function so that information can be shown
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? MainTabController else {return}
+            
+            
+            //calling the uthenticateUserAndConfigureUI function so that it verifies if the user is logged in or not.
+            tab.authenticateUserAndConfigureUI()
+            
+            //Dismissed the controlles since the loggin controller is on top if the maintabcontroller
+            self.dismiss(animated: true)
+        }
+        
     }
     
     @objc private func noAccountDidTapped(){
+        //this funtion goes to the regitrations controller so user can sign in
         let registrationVC = RegistrationController()
         registrationVC.navigationItem.setHidesBackButton(true, animated: false)
         

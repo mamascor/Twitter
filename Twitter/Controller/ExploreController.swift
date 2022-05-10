@@ -1,5 +1,5 @@
 //
-//  FeedController.swift
+//  ExploreController.swift
 //  Twitter
 //
 //  Created by Marco Mascorro on 5/5/22.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FeedController: UIViewController{
+class ExploreController: UIViewController{
     
     
     //MARK: - Properties
@@ -17,19 +17,17 @@ class FeedController: UIViewController{
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.\
-        configureUI()
         
+        // Do any additional setup after loading the view.\
+        
+        configureUI()
     }
     
     //MARK: - Helper
     func configureUI(){
         view.backgroundColor = .white
+        navigationItem.title = "Explore"
         
         
-        let imageView = UIImageView(image: UIImage(named: "twitter_logo_blue"))
-        imageView.contentMode = .scaleAspectFit
-        navigationItem.titleView = imageView
     }
-    
 }

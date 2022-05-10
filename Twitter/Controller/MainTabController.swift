@@ -6,11 +6,22 @@
 //
 
 import UIKit
+import Firebase
 
 class MainTabController: UITabBarController {
     
     
     //MARK: - Properties
+    var user : User? {
+        didSet{
+            guard let nav = viewControllers?[0] as? UINavigationController else {return}
+            guard let feed = nav.viewControllers.first as? FeedController else {return}
+            
+            feed.user = user
+        }
+    }
+    
+    
     
     //Setting up my main action button, is the blue button on all the screens
 //THE REASON IM DOING IT IN THE TAB BAR CONTROLLER, IS BECAUSE I WANT TO SHOW IT ACROSS ALL MY CONTROLLERS, SO THAT I WONT ME COPYING AND PASTING CODE
@@ -33,10 +44,48 @@ class MainTabController: UITabBarController {
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.\
-        configureUI()
-        configureViewControllers()
+//                logUserOut()
+        view.backgroundColor = .twitterBlue
+        authenticateUserAndConfigureUI()
+        
+    }
+    
+    //MARK: - API
+    
+    func fetchUser(){
+        UserService.shared.fetchUser { user in
+            self.user = user
+        }
+    }
+    
+    
+    
+    //Authenticate if user is logged in so we can display the main tab cotroller
+    func authenticateUserAndConfigureUI(){
+        //if user if not found then we go to the login controller
+        if AUTH.currentUser == nil {
+            DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginController())
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true)
+                
+            }
+        } else {
+            
+            //calling it so we can configure the ui interface
+            configureUI()
+            configureViewControllers()
+            fetchUser()
+        }
+    }
+    
+    //loggin user out
+    func logUserOut(){
+        do{
+            try AUTH.signOut()
+        } catch let error{
+            print("Failed to sign out: \(error.localizedDescription)")
+        }
     }
     
     
