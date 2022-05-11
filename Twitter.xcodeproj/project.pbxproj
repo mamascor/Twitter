@@ -89,6 +89,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE46BB0B282B63ED00ACF098 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
 		CE643D242824176C003988A3 = {
 			isa = PBXGroup;
 			children = (
@@ -110,8 +117,8 @@
 			children = (
 				CE643D302824176C003988A3 /* AppDelegate.swift */,
 				CE643D322824176C003988A3 /* SceneDelegate.swift */,
+				CE46BB0B282B63ED00ACF098 /* View Model */,
 				CE643D47282417A8003988A3 /* Model */,
-				CE643D4A282417BB003988A3 /* ViewModel */,
 				CE643D49282417BB003988A3 /* View */,
 				CE643D4F282417C6003988A3 /* Controller */,
 				CE643D54282417D8003988A3 /* API */,
@@ -138,13 +145,6 @@
 				CE955FE1282B3FB600726413 /* CaptionTextView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		CE643D4A282417BB003988A3 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		CE643D4F282417C6003988A3 /* Controller */ = {
