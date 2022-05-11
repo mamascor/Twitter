@@ -8,7 +8,9 @@
 import UIKit
 import SDWebImage
 
-class FeedController: UIViewController{
+private let reuseIdetifier = "retweetCell"
+
+class FeedController: UICollectionViewController {
     
     
     //MARK: - Properties
@@ -28,13 +30,26 @@ class FeedController: UIViewController{
         super.viewDidLoad()
         // Do any additional setup after loading the view.\
         configureUI()
+        fetchTweets()
         
+    }
+    
+    //MARK: - API
+    
+    
+    func fetchTweets(){
+        TweetService.shared.fetchTweets { tweets in
+            for tweet in tweets {
+                print(tweet.tweetId ,":",tweet.caption)
+            }
+        }
     }
     
     //MARK: - Helper
     func configureUI(){
         view.backgroundColor = .white
         
+        collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdetifier)
         
         let imageView = UIImageView(image: UIImage(named: "twitter_logo_blue"))
         imageView.contentMode = .scaleAspectFit
@@ -67,5 +82,19 @@ class FeedController: UIViewController{
 
 
 extension FeedController {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
     
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdetifier, for: indexPath) as! TweetCell
+        return cell
+        
+    }
+}
+
+extension FeedController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 100)
+    }
 }
