@@ -25,7 +25,7 @@ class MainTabController: UITabBarController {
     
     //Setting up my main action button, is the blue button on all the screens
 //THE REASON IM DOING IT IN THE TAB BAR CONTROLLER, IS BECAUSE I WANT TO SHOW IT ACROSS ALL MY CONTROLLERS, SO THAT I WONT ME COPYING AND PASTING CODE
-    let actionButton: UIButton = {
+    lazy var actionButton: UIButton = {
         let button = UIButton(type: .system)
         //Setting up the image color to white
         button.tintColor = .white
@@ -91,7 +91,10 @@ class MainTabController: UITabBarController {
     
     //MARK: - Selectors
     @objc func actionButtonTapped(){
-        print("Tapped")
+       guard let user = user else { return }
+       let vc = UINavigationController(rootViewController: UploadTweetController(user: user))
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     //MARK: - Helper

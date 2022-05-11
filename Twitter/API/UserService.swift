@@ -24,6 +24,7 @@ struct UserService {
             guard let dictionary = snapshot.value as? [String: AnyObject] else {return}
             
             let user = User(uid: uid, dictionary: dictionary)
+            
             completion(user)
         }
     }

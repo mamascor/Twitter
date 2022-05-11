@@ -78,7 +78,7 @@ class RegistrationController: UIViewController{
         return tf
     }()
     
-    private let signButton: UIButton = {
+    private lazy var signButton: UIButton = {
         let button = UIButton(type: .system)
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
         button.setTitle("Sign Up", for: .normal)
@@ -90,7 +90,7 @@ class RegistrationController: UIViewController{
     }()
     
     
-    private let haveAccountButton: UIButton = {
+    private lazy var haveAccountButton: UIButton = {
         let button = Utilities().attributedButton("Already have an account?", " Sign in")
         button.addTarget(self, action: #selector(signInDidTapped), for: .touchUpInside)
         return button
