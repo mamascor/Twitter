@@ -80,6 +80,7 @@ class FeedController: UICollectionViewController {
     
 }
 
+//MARK: - UICollectionViewDelegate/Datasource
 
 extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -92,6 +93,7 @@ extension FeedController {
         
     }
 }
+//MARK: - UICollectionViewDelegateFlowLayout
 
 extension FeedController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
