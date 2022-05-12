@@ -32,7 +32,7 @@ class MainTabController: UITabBarController {
         //Setting up the background color to the custom color that is in the extensions file
         button.backgroundColor = .twitterBlue
         //Setting up the image of the button.
-        button.setImage(UIImage(named: "new_tweet"), for: .normal)
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
         //Adding an action handler to the button with an objc function.
         button.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         
@@ -113,10 +113,10 @@ class MainTabController: UITabBarController {
     func configureViewControllers(){
         
         //setting up my controllers from the template nav controller function.
-        let feed = templateNavController(image: "home_unselected", rootviewcontroller: FeedController(collectionViewLayout: UICollectionViewFlowLayout()))
-        let explore = templateNavController(image: "search_unselected", rootviewcontroller: ExploreController())
-        let notifications = templateNavController(image: "like_unselected", rootviewcontroller: NotificationsController())
-        let conversations = templateNavController(image: "ic_mail_outline_white_2x-1", rootviewcontroller: ConversationsController())
+        let feed = templateNavController(image: "twitter_home", rootviewcontroller: FeedController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let explore = templateNavController(image: "twitter_search", rootviewcontroller: ExploreController())
+        let notifications = templateNavController(image: "twitter_notification", rootviewcontroller: NotificationsController())
+        let conversations = templateNavController(image: "twitter_message", rootviewcontroller: ConversationsController())
         
         //Setting up my tabbar background color, i must do this or else the tabbar will be transparent
         UITabBar.appearance().backgroundColor = UIColor(white: 1, alpha: 0.8)

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 
 class TweetCell: UICollectionViewCell {
@@ -34,7 +35,33 @@ class TweetCell: UICollectionViewCell {
     
     private lazy var commentButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: ""), for: .normal)
+        button.setImage(UIImage(named: "twitter_comment"), for: .normal)
+        button.setDimensions(width: 20, height: 20)
+        button.addTarget(self, action: #selector(handleCommentTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var retweetButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "twitter_retweet"), for: .normal)
+        button.setDimensions(width: 20, height: 20)
+        button.addTarget(self, action: #selector(handleRetweetTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var likeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "twitter_like"), for: .normal)
+        button.setDimensions(width: 20, height: 20)
+        button.addTarget(self, action: #selector(handleLikedTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var shareButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "twitter_share"), for: .normal)
+        button.setDimensions(width: 20, height: 20)
+        button.addTarget(self, action: #selector(handleSharedTapped), for: .touchUpInside)
         return button
     }()
     
@@ -49,8 +76,25 @@ class TweetCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
     //MARK: - Selectors
     
+    @objc func handleCommentTapped(){
+        print("comment tapped")
+    }
+    
+    @objc func handleRetweetTapped(){
+        print("retweet tapped")
+    }
+    
+    @objc func handleLikedTapped(){
+        print("like tapped")
+    }
+    
+    @objc func handleSharedTapped(){
+        print("shared tapped")
+    }
     
     
     //MARK: - Helpers
@@ -79,6 +123,15 @@ class TweetCell: UICollectionViewCell {
         addSubview(stack)
         stack.anchor(top: topAnchor, left: profileImageView.rightAnchor, paddingTop: 12, paddingLeft: 8)
         
+        
+        let buttonStack = UIStackView(arrangedSubviews: [commentButton, retweetButton, likeButton, shareButton])
+        buttonStack.axis = .horizontal
+        buttonStack.distribution = .fillEqually
+        buttonStack.spacing = 10
+        
+        addSubview(buttonStack)
+        
+        buttonStack.anchor(left: profileImageView.rightAnchor, bottom: underlineview.topAnchor,right: rightAnchor, paddingBottom: 10, paddingRight: 15)
         
     }
     
