@@ -82,7 +82,7 @@ struct AuthService {
                     
                     
                     //setting the values for the database
-                let values = ["email": email, "username": username, "fullname" : fullname, "profile_url" : profileimageurl]
+                let values = ["email": email, "username": username.lowercased(), "fullname" : fullname, "profile_url" : profileimageurl]
                 
                 
                    //updating the value so it can be saved in the data base. finishing the completion block in the register controller

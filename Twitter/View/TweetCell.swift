@@ -6,14 +6,25 @@
 //
 
 import UIKit
-import SwiftUI
+import SDWebImage
 
+
+protocol TweetCellDelegate: AnyObject {
+    func handleProfileImageTapped(_ cell: TweetCell)
+}
 
 class TweetCell: UICollectionViewCell {
     
     //MARK: - Properties
+    var tweet: Tweet? {
+        didSet{configure()}
+    }
+    
+    weak var delegate: TweetCellDelegate?
+    
+    
     //this the profileimageview thats gonna display when user writes a tweet
-    private let profileImageView: UIImageView = {
+    private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
         //setting hard coded dimensinos
         iv.setDimensions(width: 48, height: 48)
@@ -21,6 +32,10 @@ class TweetCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 48 / 2
         iv.clipsToBounds = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTapped))
+        iv.addGestureRecognizer(tap)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -96,8 +111,24 @@ class TweetCell: UICollectionViewCell {
         print("shared tapped")
     }
     
+    @objc func handleProfileImageTapped(){
+        delegate?.handleProfileImageTapped(self)
+        
+    
+    }
+    
     
     //MARK: - Helpers
+    private func configure(){
+        guard let tweet = tweet else {return}
+        let vm = TweetViewModel(tweet: tweet)
+        infoLabel.attributedText = vm.userInfoText
+        captionLabel.text = tweet.caption
+        profileImageView.sd_setImage(with: vm.profileImageUrl )
+
+    }
+    
+    
     private func configureUI(){
         backgroundColor = .white
         addSubview(profileImageView)
@@ -108,10 +139,6 @@ class TweetCell: UICollectionViewCell {
         stack.axis = .vertical
         stack.distribution = .fillProportionally
         stack.spacing = 4
-        
-        infoLabel.font = UIFont.systemFont(ofSize: 16)
-        infoLabel.text = "Eddie Brock"
-        captionLabel.text = "Hello there"
         
         let underlineview = UIView()
         underlineview.backgroundColor = .systemGroupedBackground

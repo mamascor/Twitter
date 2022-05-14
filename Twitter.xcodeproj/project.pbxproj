@@ -15,6 +15,8 @@
 		CE46BB0A282B497E00ACF098 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CE46BB09282B497E00ACF098 /* FirebaseStorage */; };
 		CE46BB0D282C695A00ACF098 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46BB0C282C695A00ACF098 /* Tweet.swift */; };
 		CE46BB0F282C737B00ACF098 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46BB0E282C737B00ACF098 /* TweetCell.swift */; };
+		CE46BB82282F231700ACF098 /* TweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46BB81282F231700ACF098 /* TweetViewModel.swift */; };
+		CE46BB84282F30F600ACF098 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46BB83282F30F500ACF098 /* UserProfileController.swift */; };
 		CE643D312824176C003988A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE643D302824176C003988A3 /* AppDelegate.swift */; };
 		CE643D332824176C003988A3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE643D322824176C003988A3 /* SceneDelegate.swift */; };
 		CE643D3A2824176E003988A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE643D392824176E003988A3 /* Assets.xcassets */; };
@@ -47,6 +49,8 @@
 		CE46BAFD282B488300ACF098 /* TweetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetService.swift; sourceTree = "<group>"; };
 		CE46BB0C282C695A00ACF098 /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		CE46BB0E282C737B00ACF098 /* TweetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
+		CE46BB81282F231700ACF098 /* TweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetViewModel.swift; sourceTree = "<group>"; };
+		CE46BB83282F30F500ACF098 /* UserProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
 		CE643D2D2824176C003988A3 /* Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE643D302824176C003988A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE643D322824176C003988A3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 		CE46BB0B282B63ED00ACF098 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				CE46BB81282F231700ACF098 /* TweetViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 				CE643D5A28241B60003988A3 /* ExploreController.swift */,
 				CE643D5C28241B6B003988A3 /* NotificationsController.swift */,
 				CE643D5E28241B77003988A3 /* ConversationsController.swift */,
+				CE46BB83282F30F500ACF098 /* UserProfileController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -287,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE643D5D28241B6B003988A3 /* NotificationsController.swift in Sources */,
+				CE46BB84282F30F600ACF098 /* UserProfileController.swift in Sources */,
 				CE46BAFE282B488300ACF098 /* TweetService.swift in Sources */,
 				CE643D5F28241B77003988A3 /* ConversationsController.swift in Sources */,
 				CE643D312824176C003988A3 /* AppDelegate.swift in Sources */,
@@ -298,6 +305,7 @@
 				CED199B7282443A500A29A2F /* Utilities.swift in Sources */,
 				CED199C628270EBF00A29A2F /* Constants.swift in Sources */,
 				CE46BB0D282C695A00ACF098 /* Tweet.swift in Sources */,
+				CE46BB82282F231700ACF098 /* TweetViewModel.swift in Sources */,
 				CED199B528243A7700A29A2F /* RegistrationController.swift in Sources */,
 				CE955FE0282B2AB900726413 /* UploadTweetController .swift in Sources */,
 				CE643D57282418EA003988A3 /* MainTabController.swift in Sources */,

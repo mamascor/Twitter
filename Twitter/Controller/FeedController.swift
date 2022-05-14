@@ -15,7 +15,9 @@ class FeedController: UICollectionViewController {
     
     //MARK: - Properties
      
-    
+    private var tweets = [Tweet]() {
+        didSet{collectionView.reloadData()}
+    }
     
     var user: User? {
         didSet{
@@ -39,11 +41,12 @@ class FeedController: UICollectionViewController {
     
     func fetchTweets(){
         TweetService.shared.fetchTweets { tweets in
-            for tweet in tweets {
-                print(tweet.tweetId ,":",tweet.caption)
-            }
+                self.tweets = tweets
         }
     }
+    
+    //MARK: - Selectors
+   
     
     //MARK: - Helper
     func configureUI(){
@@ -84,11 +87,13 @@ class FeedController: UICollectionViewController {
 
 extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return tweets.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdetifier, for: indexPath) as! TweetCell
+        cell.tweet = tweets[indexPath.row]
+        cell.delegate = self
         return cell
         
     }
@@ -98,5 +103,14 @@ extension FeedController {
 extension FeedController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 100)
+    }
+}
+
+//MARK: - TweetCellDelegate
+
+extension FeedController: TweetCellDelegate {
+    func handleProfileImageTapped(_ cell: TweetCell) {
+        let controller = UserProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(controller, animated: true)
     }
 }

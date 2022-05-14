@@ -75,6 +75,7 @@ class UploadTweetController: UIViewController {
         view.backgroundColor = .white
         
         configureUI()
+        keyboardCaller()
        
     }
     
@@ -133,6 +134,11 @@ class UploadTweetController: UIViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: tweetButton)
+    }
+    
+    
+    func keyboardCaller(){
+        captionTextView.becomeFirstResponder()
     }
 }
 
