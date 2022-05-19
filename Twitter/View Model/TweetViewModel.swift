@@ -22,8 +22,6 @@ struct TweetViewModel {
         formatter.unitsStyle = .abbreviated
         let now = Date()
         return formatter.string(from: tweet.timestamp, to: now) ?? "0m"
-        
-        
     }
     
     

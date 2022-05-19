@@ -88,11 +88,12 @@ class UploadTweetController: UIViewController {
     //function sends tweets to the firebase database
     @objc func sendTweetTapped(){
         guard let caption = captionTextView.text else { return }
+        
+        if caption == "" {return}
         TweetService.shared.uploadTweet(caption: caption) { error, ref in
             if let error = error {
                 print("DEBUG: \(error.localizedDescription)")
             }
-            print("DEBUG: Tweet was  successfully uploaded")
             self.dismiss(animated: true)
         }
     }

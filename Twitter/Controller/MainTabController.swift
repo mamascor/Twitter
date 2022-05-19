@@ -16,7 +16,6 @@ class MainTabController: UITabBarController {
         didSet{
             guard let nav = viewControllers?[0] as? UINavigationController else {return}
             guard let feed = nav.viewControllers.first as? FeedController else {return}
-            
             feed.user = user
         }
     }
@@ -125,6 +124,7 @@ class MainTabController: UITabBarController {
         
         //setting up my view controllers in an array so that it can be showns in screen, must do this or else nothing will show up
         viewControllers = [feed, explore, notifications, conversations]
+    
     }
     
     

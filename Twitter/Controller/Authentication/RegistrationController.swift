@@ -165,9 +165,6 @@ class RegistrationController: UIViewController{
     @objc private func addImageDidTapped(){
         //sets up the image picker controller which allows to pick an image from your camera roll
         let ipc = UIImagePickerController()
-        
-        print("Add Image tapped")
-        
         //this animation makes it look like the image was tapped
         addImageView.alpha = 0.75
         //adds a .3 of a second delay that makes the opacity go from 75% to 100%

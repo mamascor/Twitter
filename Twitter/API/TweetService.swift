@@ -25,8 +25,17 @@ struct TweetService {
                                      
                             
                                     ]
+        
+        let ref = REF_TWEETS.childByAutoId()
+        
         //adding the tweet with an auto id so that they dont repeat
-        REF_TWEETS.childByAutoId().updateChildValues(values, withCompletionBlock: completion)
+        ref.updateChildValues(values){ (error, ref) in
+            guard let tweetID = ref.key else {return}
+            
+            REF_USER_TWEETS.child(uid).updateChildValues([tweetID: 1], withCompletionBlock:completion)
+                                                              
+                                            
+        }
                       
     }
     
@@ -45,12 +54,41 @@ struct TweetService {
                 let tweet = Tweet(user: user ,tweetId: tweetID, dictionary: dictionary)
                 
                 tweets.append(tweet)
-                
+                tweets.sort(by: {$0.timestamp > $1.timestamp})
                 completion(tweets)
             }
             
            
         }
+        
+    }
+    
+    func fetchTweets(forUser user: User, completion: @escaping([Tweet])-> Void){
+        
+        var tweets = [Tweet]()
+        
+         let uid = user.uid 
+        
+        REF_USER_TWEETS.child(uid).observe(.childAdded){snapshot in
+            
+            let userTweetsID = snapshot.key
+            
+            
+            REF_TWEETS.child(userTweetsID).observe(.value) { snapshot in
+                
+                guard let dictionary = snapshot.value as? [String: Any] else {return}
+                
+                let tweet = Tweet(user: user, tweetId: userTweetsID, dictionary: dictionary)
+                
+                tweets.append(tweet)
+                tweets.sort(by: {$0.timestamp > $1.timestamp})
+                completion(tweets)
+            }
+            
+        }
+
+        
+        
         
     }
     

@@ -12,6 +12,7 @@ import UIKit
 class CaptionTextView: UITextView {
     
     //MARK: - Properties
+    
     //custom uitextview
     let placeholderLabel: UILabel = {
         let label = UILabel()
@@ -23,13 +24,19 @@ class CaptionTextView: UITextView {
     
     //MARK: - LifeCycle
     
+    
+    
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
+        
         
         addSubview(placeholderLabel)
         backgroundColor = .white
         font = UIFont.systemFont(ofSize: 16)
         isScrollEnabled = false
+        textAlignment = .left
+        layer.masksToBounds = true
+        dataDetectorTypes = UIDataDetectorTypes.all
         heightAnchor.constraint(equalToConstant: 300).isActive = true
         placeholderLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: 8, paddingLeft: 4)
         
